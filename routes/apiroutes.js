@@ -1,10 +1,10 @@
 // import dependencies
-const app = require('express').Router();
+const router = require('express').Router();
 const fs = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
-// import file path to db storage
+// save file path to db storage as notesPath variable
 const notesPath = path.join(__dirname, '../db/db.json');
 
 // function to return data of GET from note file path
@@ -13,17 +13,28 @@ function getNotes() {
     return JSON.parse(noteData);
 };
 
-//function to SET data to note file path
-function setNotes(notes) {
-    fs.writeFileSync(notesPath, JSON.stringify(notes, null, 2));
-};
-
 // GET route to render list of notes
-app.get('/notes', (req, res) => {
+router.get('/notes', (req, res) => {
     const data = getNotes();
     res.json(notes);
 });
 
+// function to SET data to note file path
+function setNotes(notes) {
+    fs.writeFileSync(notesPath, JSON.stringify(notes));
+};
 
+// POST route to save new note
+router.post('/notes', (req, res) => {
+    const newNote = {
+        id: uuidv4(),
+        title: req.body.title,
+        text: req.body.text,
+    };
 
-module.exports = app;
+    const notesArray = getNotes();
+    notesArray.push(newNote);
+    setNotes(notesArray);
+});
+
+module.exports = router;
