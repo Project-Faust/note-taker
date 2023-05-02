@@ -16,7 +16,7 @@ function getNotes() {
 // GET route to render list of notes
 router.get('/notes', (req, res) => {
     const data = getNotes();
-    res.json(notes);
+    return res.json(notes);
 });
 
 // function to SET data to note file path
@@ -35,6 +35,18 @@ router.post('/notes', (req, res) => {
     const notesArray = getNotes();
     notesArray.push(newNote);
     setNotes(notesArray);
+    return res.status(201).json({ message: 'Note saved successfully.' })
+});
+
+
+// DELETE route to delete a specific note
+router.delete('/notes/:id', (req, res) => {
+    const noteId = req.params.id;
+    const noteData = getNotes();
+    // parses noteData and includes all notes that DO NOT have the same ID as noteId (effectively removes all notes with the same ID as noteId)
+    noteData = noteData.filter(note => note.id !== noteId);
+    setNotes(noteData);
+    res.status(204).json({ message: 'Deletion request receieved.' })
 });
 
 module.exports = router;
