@@ -6,7 +6,7 @@ const path = require('path');
 const router = express.Router();
 
 // returns index.html to browser when hitting '/' endpoint
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
     const indexPath = path.join(__dirname, "../public/index.html");
     res.sendFile(indexPath);
 });
