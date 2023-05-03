@@ -8,14 +8,28 @@ const { v4: uuidv4 } = require('uuid');
 const notesPath = path.join(__dirname, '../db/db.json');
 
 // function to return data of GET from note file path
+// function getNotes() {
+//     const noteData = fs.readFileSync(notesPath, 'utf-8');
+//     return JSON.parse(noteData);
+// };
+
 function getNotes() {
-    const noteData = fs.readFileSync(notesPath, 'utf-8');
-    return JSON.parse(noteData);
-};
+    try {
+        const noteData = fs.readFileSync(notesPath, 'utf-8');
+        if (!noteData) {
+            return [];
+        }
+        return JSON.parse(noteData);
+    } catch (error) {
+        console.error('Error reading notes file:', error);
+        return [];
+    }
+}
 
 // GET route to render list of notes
 router.get('/notes', (req, res) => {
-    const data = getNotes();
+    const notes = getNotes();
+    console.log(notes);
     return res.json(notes);
 });
 
