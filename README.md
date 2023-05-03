@@ -37,3 +37,5 @@
   For questions or feedback, please reach out to me on <a href="https://github.com/Project-Faust">GitHub</a> or via <a href="mailto:pentecost.cody.lane@gmail.com">email</a>.
     
   ![image](https://user-images.githubusercontent.com/30759236/236074533-fee01bf5-aa6c-4f27-9055-668e5d82b0b9.png)
+
+To visit the deployed application, please visit this link: https://mighty-sierra-77813.herokuapp.com/
